@@ -23,7 +23,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'https://aplicatieweb.ro/';
+$config['base_url'] = ($_SERVER['HTTP_HOST'] == 'localhost') ? 'http://localhost/aplicatieweb' : 'https://aplicatieweb.ro/';
+
 
 /*
 |--------------------------------------------------------------------------
