@@ -10,7 +10,8 @@
                         <div class="col-md-5" style="margin-bottom: 0px">
                             <h4 class="mb-none">Contact Rapid</h4>
                             <p>Ne poti contacta imediat prin intermediul formularului de mai jos.</p>
-                            <form id="contactForm" action="<?php echo site_url().'ro/quickContact'?>" method="POST">
+                            
+                            <form id="contactForm" action="" style="display: none">
                                 <input type="hidden" value="Contact Form" name="subject" id="subject">
                                 <div class="row">
                                     <div class="form-group">
@@ -59,7 +60,7 @@
                                 </ul>
                         </div>                  
                         <div class="col-md-4" style="margin-bottom: 0px">
-                            <div class="contact-details">
+                            <div class="contact-details" style="display: none">
                                 <h4>Adresa de contact</h4>
                                 <ul class="contact">
                                     <li><p><i class="fa fa-map-marker"></i> <strong>Adresa:</strong> Prl. Tunari, Nr.1,Bl.Fb28, Slatina, jud. OLT</p></li>
@@ -79,7 +80,7 @@
                                 </a>
                             </div>
                             <div class="col-md-7">
-                                <p>© Copyright 2015. Toate drepturile rezervate. <strong> Site realizat de <a href='<?=site_url();?>'>aplicatieweb</a></strong></p> 
+                                <p>© Copyright <?=date("Y")?>. Toate drepturile rezervate. <strong> Site realizat de <a href='<?=site_url();?>'>aplicatieweb</a></strong></p> 
                             </div>
                             <div class="col-md-4">
                                 <nav id="sub-menu">

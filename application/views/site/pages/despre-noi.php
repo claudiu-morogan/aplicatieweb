@@ -74,7 +74,7 @@
 
             <div class="col-md-6">
 
-                <div class="col-md-6 col-sm-12 col-xs-12">
+                <div class="col-md-6 col-sm-12 col-xs-12" style="display:none">
 
                     <span class="thumb-info thumb-info-hide-wrapper-bg">
 

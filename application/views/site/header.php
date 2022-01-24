@@ -117,11 +117,11 @@
                                             <li class="hidden-xs">
                                                 <a href="<?=site_url();?>/ro/desprenoi"><i class="fa fa-angle-right"></i> Despre noi</a>
                                             </li>                                            
-                                            <li class="hidden-xs">
+                                            <!-- <li class="hidden-xs">
                                                 <a href="<?=site_url();?>/ro/contact"><i class="fa fa-angle-right"></i> Contact</a>
-                                            </li>
+                                            </li> -->
                                             <li>
-                                                <span class="ws-nowrap"><i class="fa fa-phone"></i><a href="tel:+400765317755"> +40 0765 317 755</a></span>
+                                                <span class="ws-nowrap"><i class="fa fa-phone"></i><a href="#"> 001</a></span>
                                             </li>
                                         </ul>
                                     </nav>
@@ -132,8 +132,8 @@
                                             <i class="fa fa-bars"></i>
                                         </button>
                                         <ul class="header-social-icons social-icons hidden-xs">
-                                            <li class="social-icons-facebook"><a href="https://www.facebook.com/aplicatiewebro/" target="_blank" title="Facebook"><i class="fa fa-facebook"></i></a></li>
-                                            <li class="social-icons-google"><a href="https://plus.google.com/u/0/109096471316670907582" target="_blank" title="google"><i class="fa fa-google"></i></a></li>
+                                            <li class="social-icons-facebook"><a href="#" target="_blank" title="Facebook"><i class="fa fa-facebook"></i></a></li>
+                                            <li class="social-icons-google"><a href="#" target="_blank" title="google"><i class="fa fa-google"></i></a></li>
                                         </ul>
                                         <div class="header-nav-main header-nav-main-effect-1 header-nav-main-sub-effect-1 collapse">
                                             <!-- MENIU -->
@@ -152,11 +152,11 @@
                                                         </a>                                                        
                                                     </li>
 
-                                                    <li class="<?php echo ($page == 'servicii') ? 'active' : ''; ?>">
+                                                    <!-- <li class="<?php echo ($page == 'servicii') ? 'active' : ''; ?>">
                                                         <a  href="<?=site_url();?>site/servicii">
                                                             Servicii
                                                         </a>                                                        
-                                                    </li>
+                                                    </li> -->
 
                                                     <li class="<?php echo ($page == 'portofoliu') ? 'active' : ''; ?>">
                                                         <a  href="<?=site_url();?>site/portofoliu">
@@ -164,11 +164,11 @@
                                                         </a>                                                        
                                                     </li>
                                                     
-                                                    <li class="<?php echo ($page == 'contact') ? 'active' : ''; ?>">
+                                                    <!-- <li class="<?php echo ($page == 'contact') ? 'active' : ''; ?>">
                                                         <a  href="<?=site_url();?>site/contact">
                                                             Contact
                                                         </a>                                                        
-                                                    </li>
+                                                    </li> -->
                                                 </ul>
                                             </nav>
                                             <!-- END MENIU -->
