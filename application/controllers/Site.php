@@ -2,43 +2,15 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-
-
-class Ro extends CI_Controller
-
-{
-
-    // cine primeste mailuri de pe formularele de contact
+class Site extends CI_Controller {
 
     const EMAILS = 'claudiu@aplicatieweb.ro, ionut@aplicatieweb.ro, office@aplicatieweb.ro, ionutytaly32@gmail.com, claudiumorogan@gmail.com';
 
-
-
-    /**
-
-     * Metoda de construire a obiectului, draga Ionut :P
-
-     */
-
     public function __construct()
-
     {
-
         parent::__construct();
-
         $this->load->helper('url');
-
     }
-
-
-
-    /**
-
-     * Functia principala apelata in root-ul clasei din url
-
-     * Pagina principala
-
-     */
 
     public function index()
 
@@ -46,17 +18,14 @@ class Ro extends CI_Controller
 
         $data['page'] = 'home';
 
-        # TO DO - Redirect catre RO cand intra pe root-ul site-ului
+        
+        $this->load->view('site/header.php', $data);
 
-        $this->load->view('romana/header.php', $data);
+        $this->load->view('site/pages/home.php');
 
-        $this->load->view('romana/pagini/home.php');
-
-        $this->load->view('romana/footer.php');
+        $this->load->view('site/footer.php');
 
     }
-
-
 
     /**
 
@@ -70,11 +39,11 @@ class Ro extends CI_Controller
 
         $data['page'] = 'contact';
 
-        $this->load->view('romana/header.php', $data);
+        $this->load->view('site/header.php', $data);
 
-        $this->load->view('romana/pagini/contact.php');
+        $this->load->view('site/pages/contact.php');
 
-        $this->load->view('romana/footer.php');
+        $this->load->view('site/footer.php');
 
     }
 
@@ -100,11 +69,11 @@ class Ro extends CI_Controller
 
         
 
-        $this->load->view('romana/header.php', $data);
+        $this->load->view('site/header.php', $data);
 
-        $this->load->view('romana/pagini/portofoliu.php', $data);
+        $this->load->view('site/pages/portofoliu.php', $data);
 
-        $this->load->view('romana/footer.php');        
+        $this->load->view('site/footer.php');        
 
     }
 
@@ -128,11 +97,11 @@ class Ro extends CI_Controller
 
 
 
-        $this->load->view('romana/header.php', $data);
+        $this->load->view('site/header.php', $data);
 
-        $this->load->view('romana/pagini/servicii.php', $data);
+        $this->load->view('site/pages/servicii.php', $data);
 
-        $this->load->view('romana/footer.php');        
+        $this->load->view('site/footer.php');        
 
     }
 
@@ -154,11 +123,11 @@ class Ro extends CI_Controller
 
 
 
-        $this->load->view('romana/header.php', $data);
+        $this->load->view('site/header.php', $data);
 
-        $this->load->view('romana/pagini/despre-noi.php', $data);
+        $this->load->view('site/pages/despre-noi.php', $data);
 
-        $this->load->view('romana/footer.php');        
+        $this->load->view('site/footer.php');        
 
     }
 
@@ -280,11 +249,11 @@ class Ro extends CI_Controller
 
 
 
-        $this->load->view('romana/header', $data);
+        $this->load->view('site/header', $data);
 
-        $this->load->view('romana/pagini/formular_comanda', $data);
+        $this->load->view('site/pages/formular_comanda', $data);
 
-        $this->load->view('romana/footer');
+        $this->load->view('site/footer');
 
 
 
@@ -374,7 +343,7 @@ class Ro extends CI_Controller
 
 
 
-        $fileUrl     = site_url()."xml/proiecte.xml";
+        $filFeUrl     = site_url()."xml/proiecte.xml";
 
         $count       = 0;
 
@@ -451,21 +420,6 @@ class Ro extends CI_Controller
         return $x;
 
     }
-
-
-
-    // public function test()
-
-    // {
-
-    //     echo shell_exec('D:');
-
-    //     echo shell_exec('cd D:\\wamp64\\www\\aplicatieweb');
-
-    //     echo shell_exec('svn up --username santaklaus --password cmorogan89');
-
-    // }
-
 	
 
     /**
@@ -570,18 +524,9 @@ class Ro extends CI_Controller
 
         $data['page']     = 'Ana Maria Moiceanu';
 
-
-
-        //$this->load->view('romana/header.php', $data);
-
-        $this->load->view('romana/pagini/ana.php', $data);
-
-        //$this->load->view('romana/footer.php');        
+        $this->load->view('site/pages/ana.php', $data);
 
     }
 
-
-
-    
 
 }
