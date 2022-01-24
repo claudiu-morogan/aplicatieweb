@@ -4,21 +4,21 @@
 
     <proiect>
 
-        <denumire>Rmatinal.ro</denumire>
+        <denumire>demo.de</denumire>
 
-        <tip>Aplicatie Web - Platforma de stiri</tip>
+        <tip>Aplicatie tip mokup</tip>
 
         <imagine>img/portfolio/portofoliuMain/rmatinal.png</imagine>
 
         <filtru>aplicatie-web</filtru>
 
-        <link>http://www.rmatinal.ro/</link>
+        <link>#</link>
 
     </proiect>
 
 
 
-    <proiect>
+    <!-- <proiect>
 
         <denumire>Homesearch-munich.com</denumire>
 
@@ -31,24 +31,6 @@
         <link>http://www.homesearch-munich.com/</link>
 
     </proiect>
-
-
-
-    <!-- <proiect>
-
-        <denumire>Outletiq.com</denumire>
-
-        <tip>Magazin Virtual</tip>
-
-        <imagine>img/portfolio/portofoliuMain/outletiq.png</imagine>
-
-        <filtru>magazin-virtual</filtru>
-
-        <link>http://www.outletiq.com/</link>
-
-    </proiect> -->
-
-
 
     <proiect>
 
@@ -160,7 +142,7 @@
 
         <link>http://www.apartamentdevanzare.ro/</link>
 
-    </proiect>
+    </proiect> -->
 
 
 
