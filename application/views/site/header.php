@@ -147,25 +147,25 @@
                                                     </li>                                                                                                        
 
                                                     <li class="<?php echo ($page == 'despre-noi') ? 'active' : ''; ?>">
-                                                        <a  href="<?=site_url();?>ro/desprenoi">
+                                                        <a  href="<?=site_url();?>site/desprenoi">
                                                             Despre Noi
                                                         </a>                                                        
                                                     </li>
 
                                                     <li class="<?php echo ($page == 'servicii') ? 'active' : ''; ?>">
-                                                        <a  href="<?=site_url();?>ro/servicii">
+                                                        <a  href="<?=site_url();?>site/servicii">
                                                             Servicii
                                                         </a>                                                        
                                                     </li>
 
                                                     <li class="<?php echo ($page == 'portofoliu') ? 'active' : ''; ?>">
-                                                        <a  href="<?=site_url();?>ro/portofoliu">
+                                                        <a  href="<?=site_url();?>site/portofoliu">
                                                             Portofoliu
                                                         </a>                                                        
                                                     </li>
                                                     
                                                     <li class="<?php echo ($page == 'contact') ? 'active' : ''; ?>">
-                                                        <a  href="<?=site_url();?>ro/contact">
+                                                        <a  href="<?=site_url();?>site/contact">
                                                             Contact
                                                         </a>                                                        
                                                     </li>

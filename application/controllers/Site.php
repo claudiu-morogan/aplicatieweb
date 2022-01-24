@@ -272,9 +272,7 @@ class Site extends CI_Controller {
     {
 
         $this->load->library('email');
-
-
-
+        
         // Colectez datele din formular
 
         $nume    = $this->input->post('name');
