@@ -341,7 +341,7 @@ class Site extends CI_Controller {
 
 
 
-        $filFeUrl     = site_url()."xml/proiecte.xml";
+        $fileUrl     = site_url()."xml/proiecte.xml";
 
         $count       = 0;
 
