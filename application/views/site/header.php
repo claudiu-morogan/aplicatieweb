@@ -164,11 +164,11 @@
                                                         </a>                                                        
                                                     </li>
                                                     
-                                                    <!-- <li class="<?php echo ($page == 'contact') ? 'active' : ''; ?>">
+                                                    <li class="<?php echo ($page == 'contact') ? 'active' : ''; ?>">
                                                         <a  href="<?=site_url();?>site/contact">
                                                             Contact
                                                         </a>                                                        
-                                                    </li> -->
+                                                    </li>
                                                 </ul>
                                             </nav>
                                             <!-- END MENIU -->
