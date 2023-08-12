@@ -1,0 +1,26 @@
+version: '3.4'
+services:
+  php:
+    container_name: php_dev
+    build:
+      context: .
+      dockerfile: php.docker
+    ports:
+      - '80:80'
+    stdin_open: true
+    tty: true
+    volumes:
+      - './app:/var/www/'
+    depends_on:
+      - db
+  db:
+    container_name: db
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: claudiu
+      MYSQL_USER: claudiu
+      MYSQL_PASSWORD: claudiu
+    ports:
+      - '9906:3306'
