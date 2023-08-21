@@ -2,6 +2,8 @@ version: '3.4'
 services:
   php:
     container_name: php_dev
+    mem_limit: 1024m
+    cpus: 2
     build:
       context: .
       dockerfile: php.docker
@@ -15,12 +17,16 @@ services:
       - db
   db:
     container_name: db
+    mem_limit: 1024m
+    cpus: 2
     image: mysql
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: claudiu
+      MYSQL_DATABASE: aplicatieweb
       MYSQL_USER: claudiu
       MYSQL_PASSWORD: claudiu
+    volumes:
+      - ./dep/install.sql:/docker-entrypoint-initdb.d/0_init.sql
     ports:
       - '9906:3306'

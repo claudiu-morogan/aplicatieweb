@@ -70,7 +70,7 @@ class MySql extends DBConnection
     {
 
         // Perform query
-        if ($result = $this->conn-> query("SELECT * FROM test")) {
+        if ($result = $this->conn-> query("SELECT * FROM users")) {
             echo "Returned rows are: " . $result -> num_rows;
             // Free result set
             $result -> free_result();
@@ -80,28 +80,22 @@ class MySql extends DBConnection
 
     public function show_registrations()
     {
-        $db = $this->conn;
-        $stmt = $db->prepare("SELECT * FROM test");
-        $stmt->execute();
-        $x = $stmt->fetch();
-
-        while($row = $stmt->fetch() != false)
-        {
-            echo $row['id'];
-        }
+        // $db = $this->conn;
+        // $stmt = $db->prepare("SELECT * FROM test");
+        // $stmt->execute();
         
     }
 }
 
 $mysql = new MySql([
     'host'	   => 'db',
-	'username' => 'claudiu2',
-	'password' => 'claudiu2',
-    'db'       => 'claudiu'	
+	'username' => 'claudiu',
+	'password' => 'claudiu',
+    'db'       => 'aplicatieweb'	
 ]);
 
 // $mysql->count();
-$mysql->show_registrations();
+$mysql->count();
 
 
 
