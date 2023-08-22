@@ -88,14 +88,50 @@ class MySql extends DBConnection
 }
 
 $mysql = new MySql([
-    'host'	   => 'db',
+	'host'	   => 'db',
 	'username' => 'claudiu',
 	'password' => 'claudiu',
-    'db'       => 'aplicatieweb'	
+	'db'       => 'aplicatieweb'	
 ]);
 
-// $mysql->count();
-$mysql->count();
+if($_POST){
+    echo 'post';
+}
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+	<title>AplicatieWeb</title>
+</head>
+<body>
+	<form action="index.php" method="POST">
+		
+
+    <div class="row">
+        <div class="col-md-4">
+            <!-- <p>Column 1</p> -->
+        </div>
+        <div class="col-md-4">
+            
+        <input type="text" class="form-control" name="username" placeholder="Username"><br>
+
+		<input type="password" class="form-control" name="password" placeholder="Password"><br>
+
+		<input type="submit" class="btn btn-danger pull-right" name="submit" value="Submit">
+        </div>
+        <div class="col-md-4">
+            <!-- <p>Column 3</p> -->
+        </div>
+    </div>
+    
+        
+
+	</form>
+</body>
+</html>
+
 
 
 
