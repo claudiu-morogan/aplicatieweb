@@ -78,12 +78,21 @@ class MySql extends DBConnection
 
     }
 
-    public function show_registrations()
+    public function checkUser($data)
     {
-        // $db = $this->conn;
-        // $stmt = $db->prepare("SELECT * FROM test");
-        // $stmt->execute();
-        
+        $username = $data['username'];
+        $password = $data['password'];
+
+        $sql = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
+
+        if ($result = $this->conn-> query($sql)) {
+            if($result -> num_rows > 0){
+                return true;
+            }
+            // Free result set
+            $result -> free_result();
+
+        }
     }
 }
 
@@ -95,7 +104,9 @@ $mysql = new MySql([
 ]);
 
 if($_POST){
-    echo 'post';
+    if($mysql->checkUser($_POST)){
+        echo "Userul exista";
+    }
 }
 ?>
 
@@ -111,7 +122,7 @@ if($_POST){
 
     <div class="row">
         <div class="col-md-4">
-            <!-- <p>Column 1</p> -->
+            
         </div>
         <div class="col-md-4">
             
@@ -122,7 +133,7 @@ if($_POST){
 		<input type="submit" class="btn btn-danger pull-right" name="submit" value="Submit">
         </div>
         <div class="col-md-4">
-            <!-- <p>Column 3</p> -->
+            
         </div>
     </div>
     
