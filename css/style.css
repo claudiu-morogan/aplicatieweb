@@ -1,0 +1,174 @@
+/* Tipografie de bază & reset */
+:root {
+  --font-main: 'Roboto', system-ui, Arial, sans-serif;
+  --transition: .4s cubic-bezier(.4,0,.2,1);
+  --radius: 18px;
+  --glass-bg: rgba(255,255,255,.08);
+  --glass-border: rgba(255,255,255,.25);
+  --shadow: 0 4px 14px -2px rgba(0,0,0,.45);
+  --outline: 2px solid #fff6;
+
+  /* Paletă Toamnă */
+  --autumn-bg: #2a1a12;
+  --autumn-grad-1: #5a2c0a;
+  --autumn-grad-2: #a74d00;
+  --autumn-accent: #ffb347;
+  --autumn-accent-2: #ffd27f;
+  --autumn-text: #ffe9d6;
+  --autumn-table-head: linear-gradient(135deg,#b35c00,#ff9800 70%);
+
+  /* Paletă Crăciun */
+  --xmas-bg: #0d1f1a;
+  --xmas-grad-1: #0d3b2e;
+  --xmas-grad-2: #146b49;
+  --xmas-accent: #e53935;
+  --xmas-accent-2: #ffc107;
+  --xmas-text: #f1fff9;
+  --xmas-table-head: linear-gradient(135deg,#b71c1c,#ff7043 65%);
+
+  /* Variabile dinamice (se schimbă cu tema) */
+  --c-bg: var(--autumn-bg);
+  --c-grad-1: var(--autumn-grad-1);
+  --c-grad-2: var(--autumn-grad-2);
+  --c-accent: var(--autumn-accent);
+  --c-accent-2: var(--autumn-accent-2);
+  --c-text: var(--autumn-text);
+  --c-table-head: var(--autumn-table-head);
+  --c-snow-leaf: #ffb347;
+}
+
+body.theme-christmas {
+  --c-bg: var(--xmas-bg);
+  --c-grad-1: var(--xmas-grad-1);
+  --c-grad-2: var(--xmas-grad-2);
+  --c-accent: var(--xmas-accent);
+  --c-accent-2: var(--xmas-accent-2);
+  --c-text: var(--xmas-text);
+  --c-table-head: var(--xmas-table-head);
+  --c-snow-leaf: #fff;
+}
+
+* { box-sizing: border-box; }
+html,body { height: 100%; }
+body {
+  margin: 0;
+  font-family: var(--font-main);
+  color: var(--c-text);
+  background: radial-gradient(circle at 30% 20%, var(--c-grad-2) -10%, var(--c-bg) 70%) fixed;
+  background-attachment: fixed;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  transition: background 1.2s ease, color var(--transition);
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  backdrop-filter: blur(10px);
+  background: linear-gradient(90deg, var(--c-grad-1), transparent);
+  padding: .8rem 1.2rem;
+  border-bottom: 1px solid var(--glass-border);
+  z-index: 50;
+}
+.site-header .inner { max-width: 1000px; margin: 0 auto; display: flex; align-items: center; gap: 1rem; justify-content: space-between; }
+
+.gradient-text {
+  background: linear-gradient(120deg,var(--c-accent),var(--c-accent-2));
+  background-clip: text; /* standard */
+  -webkit-background-clip: text; /* safari */
+  color: transparent;
+  filter: drop-shadow(0 2px 4px #000a);
+  font-size: clamp(1.7rem,3.3vw,3rem);
+  margin: 0;
+}
+
+.theme-controls { display: flex; align-items: center; gap: .6rem; }
+.btn {
+  background: var(--c-accent);
+  color: #1d0f06;
+  border: none;
+  padding: .55rem 1rem;
+  font-weight: 700;
+  border-radius: 999px;
+  cursor: pointer;
+  letter-spacing: .5px;
+  box-shadow: 0 2px 6px -1px #000a;
+  transition: var(--transition);
+}
+.btn:hover, .btn:focus-visible { background: var(--c-accent-2); outline: none; }
+.btn:active { transform: translateY(2px); }
+
+.auto-switch { font-size: .8rem; display: flex; align-items: center; gap: .35rem; user-select: none; }
+.auto-switch input { accent-color: var(--c-accent); cursor: pointer; }
+
+.container {
+  max-width: 1000px;
+  margin: clamp(1rem,4vw,3rem) auto 4rem;
+  padding: 2rem clamp(1rem,3vw,2.2rem);
+  background: linear-gradient(165deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.container::before,
+.container::after {
+  content: "";
+  position: absolute;
+  width: 420px; height: 420px;
+  background: radial-gradient(circle at 30% 30%, var(--c-accent-2) 0%, transparent 70%);
+  opacity: .06;
+  filter: blur(10px);
+  animation: float 14s linear infinite;
+}
+.container::after { top: auto; bottom: -160px; right: -160px; animation-duration: 18s; }
+.container::before { top: -160px; left: -160px; }
+@keyframes float { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+.countdown-table { width: 100%; border-collapse: collapse; font-size: clamp(.85rem,1.5vw,1rem); }
+.countdown-table thead th {
+  background: var(--c-table-head);
+  color: #fff;
+  text-align: left;
+  padding: .85rem .9rem;
+  font-weight: 600;
+  letter-spacing: .5px;
+  position: sticky; top: 0; backdrop-filter: blur(6px);
+}
+.countdown-table tbody td { padding: .7rem .8rem; border-bottom: 1px solid rgba(255,255,255,.12); }
+.countdown-table tbody tr { transition: background .35s ease; }
+.countdown-table tbody tr:hover { background: rgba(255,255,255,.08); }
+.countdown-table tbody tr.past { opacity: .55; }
+
+.legend { font-size: .75rem; opacity: .75; margin-top: .6rem; }
+
+.next-big { margin-top: 2.2rem; background: rgba(0,0,0,.25); padding: 1.1rem 1.2rem; border-radius: var(--radius); border: 1px solid rgba(255,255,255,.18); box-shadow: inset 0 0 0 1px rgba(255,255,255,.05); }
+.next-big h3 { margin: 0 0 .5rem; font-size: 1.1rem; letter-spacing: .5px; text-transform: uppercase; }
+#next-stage { margin: 0; font-weight: 600; }
+
+.site-footer { text-align: center; padding: 2rem 1rem 3rem; font-size: .8rem; opacity: .8; }
+
+.visually-hidden { position: absolute !important; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); border:0; }
+
+/* Responsivitate */
+@media (max-width: 640px) {
+  .countdown-table thead th, .countdown-table tbody td { padding: .65rem .55rem; }
+  .theme-controls { flex-wrap: wrap; }
+  .container { padding: 1.35rem 1rem 1.9rem; }
+}
+
+/* Particule sezoniere (frunze sau zăpadă) */
+.particle-layer { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 5; }
+.leaf, .snowflake { position: absolute; top: -10vh; font-size: clamp(14px,2vw,28px); animation: fall linear forwards; opacity: .85; }
+@keyframes fall { to { transform: translate3d(var(--x-end), 110vh, var(--z,0)) rotate(var(--rot-end)); opacity: .3; } }
+
+body.theme-christmas .leaf { display:none; }
+body:not(.theme-christmas) .snowflake { display:none; }
+
+/* Stilizare scrollbar */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #0003; }
+::-webkit-scrollbar-thumb { background: linear-gradient(var(--c-accent),var(--c-accent-2)); border-radius: 6px; }
+::-webkit-scrollbar-thumb:hover { background: linear-gradient(var(--c-accent-2),var(--c-accent)); }

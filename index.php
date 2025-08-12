@@ -1,136 +1,62 @@
 <!DOCTYPE html>
 <html lang="ro">
 <head>
-  <meta charset="UTF-8">
-  <title>Countdown până la toamnă 🍁</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-
-    body {
-      margin: 0;
-      font-family: 'Roboto', sans-serif;
-      background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80');
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-      color: #fff;
-      text-shadow: 1px 1px 2px #000;
-    }
-
-    .container {
-      background-color: rgba(0, 0, 0, 0.6);
-      max-width: 800px;
-      margin: 60px auto;
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.5);
-    }
-
-    h1 {
-      text-align: center;
-      font-size: 2.5em;
-      margin-bottom: 20px;
-      color: #ffcc80;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background-color: rgba(255, 255, 255, 0.1);
-    }
-
-    th, td {
-      padding: 12px 16px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-      text-align: left;
-    }
-
-    th {
-      background-color: rgba(255, 204, 128, 0.3);
-      color: #ffe0b2;
-    }
-
-    td {
-      color: #fff3e0;
-    }
-
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 1.8em;
-      }
-
-      .container {
-        padding: 20px;
-      }
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Countdown Toamnă & Crăciun 🍁🎄</title>
+  <meta name="description" content="Countdown etape până la toamnă cu temă sezonieră și mod Crăciun automat sau manual." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=1" />
 </head>
 <body>
+  <header class="site-header" role="banner">
+    <div class="inner">
+      <h1 id="site-title" class="gradient-text" data-autumn="Etape până la toamnă 🍂" data-christmas="Etape până la Crăciun 🎄">Etape până la toamnă 🍂</h1>
+      <div class="theme-controls">
+        <button id="toggle-theme" class="btn" type="button" aria-pressed="false" aria-label="Schimbă tema">Crăciun 🎄</button>
+        <label class="auto-switch"><input type="checkbox" id="auto-mode" checked /> <span>Auto</span></label>
+      </div>
+    </div>
+  </header>
 
-  <div class="container">
-    <h1>Etape până la toamnă 🍂</h1>
-    <table>
-      <thead>
-        <tr>
-          <th>Etapă</th>
-          <th>Estimare</th>
-          <th>Timp rămas</th>
-        </tr>
-      </thead>
-      <tbody id="tabel-etape"></tbody>
-    </table>
-  </div>
+  <main class="container" role="main">
+    <section aria-labelledby="tabel-title">
+      <h2 id="tabel-title" class="visually-hidden">Lista etapelor și timpul rămas</h2>
+      <table class="countdown-table" aria-describedby="legend">
+        <thead>
+          <tr>
+            <th scope="col">Etapă</th>
+            <th scope="col">Estimare</th>
+            <th scope="col">Timp rămas</th>
+          </tr>
+        </thead>
+        <tbody id="tabel-etape"></tbody>
+      </table>
+      <p id="legend" class="legend">Date estimative – pot varia după vreme.</p>
+    </section>
+
+    <section class="next-big" aria-live="polite" aria-atomic="true">
+      <h3>Următorul prag</h3>
+      <p id="next-stage">Identificare...</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="year"></span> Sezon | <span id="active-theme-label">Tema Toamnă</span></p>
+  </footer>
 
   <script>
-    const etape = [
+    window.__ETAPE__ = [
       { etapa: "Scade temperatura sub 30°C (în general)", estimare: "2025-08-15T00:00:00" },
       { etapa: "Primele frunze galbene în copaci", estimare: "2025-09-01T00:00:00" },
       { etapa: "Vânt mai răcoros dimineața", estimare: "2025-09-05T00:00:00" },
       { etapa: "Simți nevoia de geacă dimineața", estimare: "2025-09-10T00:00:00" },
-      { etapa: "Început oficial al toamnei", estimare: "2025-09-22T00:00:00" },
+      { etapa: "Început oficial al toamnei", estimare: "2025-09-22T00:00:00" }
     ];
-
-    const tbody = document.getElementById("tabel-etape");
-
-    // Inițializare rânduri
-    etape.forEach(({ etapa, estimare }, index) => {
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td>${etapa}</td>
-        <td>${new Date(estimare).toLocaleDateString("ro-RO")}</td>
-        <td id="timer-${index}">calculând...</td>
-      `;
-      tbody.appendChild(tr);
-    });
-
-    function updateTimers() {
-      const now = new Date();
-
-      etape.forEach(({ estimare }, index) => {
-        const future = new Date(estimare);
-        const diff = future - now;
-
-        const element = document.getElementById(`timer-${index}`);
-
-        if (diff <= 0) {
-          element.textContent = "deja trecut";
-          return;
-        }
-
-        const sec = Math.floor(diff / 1000) % 60;
-        const min = Math.floor(diff / (1000 * 60)) % 60;
-        const hrs = Math.floor(diff / (1000 * 60 * 60)) % 24;
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-
-        element.textContent = `${days} zile, ${hrs} ore, ${min} minute, ${sec} secunde`;
-      });
-    }
-
-    // Actualizează la fiecare secundă
-    updateTimers();
-    setInterval(updateTimers, 1000);
   </script>
-
+  <script src="js/app.js?v=1"></script>
 </body>
 </html>
 
