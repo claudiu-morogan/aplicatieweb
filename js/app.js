@@ -6,6 +6,7 @@
   const yearEl = document.getElementById('year');
   const toggleBtn = document.getElementById('toggle-theme');
   const autoModeCb = document.getElementById('auto-mode');
+  const particlesToggle = document.getElementById('particles-toggle');
   const title = document.getElementById('site-title');
   const activeThemeLabel = document.getElementById('active-theme-label');
 
@@ -80,6 +81,7 @@
     activeThemeLabel.textContent = 'Tema ' + (isXmas ? 'Crăciun' : 'Toamnă');
     title.textContent = isXmas ? title.dataset.christmas : title.dataset.autumn;
     spawnParticles();
+  buildLights(isXmas);
   }
 
   function loadPrefs(){
@@ -117,9 +119,25 @@
     }
   }
 
+  // Construiește beculețe
+  function buildLights(isXmas){
+    const bar = document.querySelector('.lights-bar');
+    if(!bar) return;
+    bar.innerHTML = '';
+    if(!isXmas) return;
+  const colors = ['#ff4d4d','#ffec85','#63ffbf','#4dd2ff','#ff66a6','#ffe57f','#62ff7a'];
+    for(let i=0;i<22;i++){
+      const s = document.createElement('span');
+      s.style.color = colors[i % colors.length];
+      s.style.setProperty('--i', i);
+      bar.appendChild(s);
+    }
+  }
+
   // Particule sezoniere (frunze / fulgi)
   let particleTimer; let layer;
   function spawnParticles(){
+    if(particlesToggle && !particlesToggle.checked){ if(layer) layer.innerHTML=''; return; }
     if(layer){ layer.innerHTML=''; }
     if(!layer){
       layer = document.createElement('div');
@@ -151,4 +169,6 @@
   }
 
   loadPrefs();
+  particlesToggle && particlesToggle.addEventListener('change', ()=> spawnParticles());
+  buildLights(body.classList.contains('theme-christmas'));
 })();

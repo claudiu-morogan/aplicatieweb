@@ -13,11 +13,23 @@
 <body>
   <header class="site-header" role="banner">
     <div class="inner">
-      <h1 id="site-title" class="gradient-text" data-autumn="Etape până la toamnă 🍂" data-christmas="Etape până la Crăciun 🎄">Etape până la toamnă 🍂</h1>
-      <div class="theme-controls">
-        <button id="toggle-theme" class="btn" type="button" aria-pressed="false" aria-label="Schimbă tema">Crăciun 🎄</button>
-        <label class="auto-switch"><input type="checkbox" id="auto-mode" checked /> <span>Auto</span></label>
+      <div class="brand-block">
+        <h1 id="site-title" class="gradient-text" data-autumn="Etape până la toamnă 🍂" data-christmas="Etape până la Crăciun 🎄">Etape până la toamnă 🍂</h1>
+        <a class="author-link" href="https://www.claudiu-morogan.dev" target="_blank" rel="noopener noreferrer" title="Portofoliu Claudiu Morogan">Claudiu Morogan</a>
       </div>
+      <nav class="toolbar" aria-label="Setări temă">
+        <div class="theme-controls">
+          <button id="toggle-theme" class="btn" type="button" aria-pressed="false" aria-label="Schimbă tema">Crăciun 🎄</button>
+          <label class="auto-switch" title="Mod automat în funcție de sezon"><input type="checkbox" id="auto-mode" checked /> <span>Auto</span></label>
+          <label class="auto-switch" title="Pornește/Opresc particulele"><input type="checkbox" id="particles-toggle" checked /> <span>Particule</span></label>
+        </div>
+      </nav>
+    </div>
+    <div class="lights-bar" aria-hidden="true">
+      <svg class="wire" viewBox="0 0 100 40" preserveAspectRatio="none" role="img" aria-label="sârmă lumini decorative">
+        <path class="wire-base" d="M0 18 C12 4 25 34 38 18 S63 34 76 18 90 30 100 22"/>
+        <path class="wire-glow" d="M0 18 C12 4 25 34 38 18 S63 34 76 18 90 30 100 22"/>
+      </svg>
     </div>
   </header>
 
