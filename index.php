@@ -59,16 +59,62 @@
     <p>&copy; <span id="year"></span> Sezon | <span id="active-theme-label">Tema Toamnă</span></p>
   </footer>
 
+  <!-- Datele etapelor au fost mutate în fișiere JSON în directorul /data
+       Fișiere: data/etape.json și data/etape_craciun.json
+       Dacă serverul nu le poate servi, aplicația încearcă în continuare să folosească
+       variabilele globale `window.__ETAPE__` și `window.__ETAPE_CRACIUN__` ca fallback. -->
   <script>
-    window.__ETAPE__ = [
-      { etapa: "Scade temperatura sub 30°C (în general)", estimare: "2025-08-15T00:00:00" },
-      { etapa: "Primele frunze galbene în copaci", estimare: "2025-09-01T00:00:00" },
-      { etapa: "Vânt mai răcoros dimineața", estimare: "2025-09-05T00:00:00" },
-      { etapa: "Simți nevoia de geacă dimineața", estimare: "2025-09-10T00:00:00" },
-      { etapa: "Început oficial al toamnei", estimare: "2025-09-22T00:00:00" }
-    ];
+    // Încarcă datele de sezon din API (json.php?format=json) și expune ca variabile globale
+    (function(){
+      const api = './json.php?format=json';
+      console.info('[countdown] încerc fetch API seasons:', api);
+      fetch(api, {cache: 'no-cache'})
+        .then(res => {
+          if(!res.ok) throw new Error('HTTP ' + res.status);
+          const ct = res.headers.get('Content-Type') || '';
+          if(ct.indexOf('application/json') === -1) throw new Error('Nu este JSON');
+          return res.json();
+        })
+        .then(data => {
+          if(data.autumn) window.__ETAPE__ = data.autumn;
+          if(data.christmas) window.__ETAPE_CRACIUN__ = data.christmas;
+          console.info('[countdown] seasons loaded from API', {autumn: (window.__ETAPE__||[]).length, christmas: (window.__ETAPE_CRACIUN__||[]).length});
+          // Notificăm aplicația că datele au fost încărcate
+          try{ window.dispatchEvent(new CustomEvent('seasons:loaded', { detail: data })); }catch(e){}
+        })
+        .catch(err => {
+          console.warn('[countdown] Nu am putut încărca seasons API, folosesc fallbackuri dacă există', err);
+        });
+    })();
   </script>
-  <script src="js/app.js?v=1"></script>
+  <script>console.info('[countdown] inline: index.php a încărcat script-urile');</script>
+  <!-- Loader dinamic pentru js/app.js: încearcă mai multe căi și raportează onload/onerror în consolă -->
+  <script>
+    (function(){
+      const candidates = ['./js/app.js?v=1','./js/app.js','/aplicatieweb/js/app.js?v=1','/aplicatieweb/js/app.js'];
+      console.info('[countdown] încerc să încarc js/app.js din căi posibile:', candidates);
+      let tried = 0;
+      function tryLoad(idx){
+        if(idx >= candidates.length){
+          console.error('[countdown] Nu am reușit să încarc niciunul dintre fișierele js/app.js. Verifică calea și permisiunile.');
+          // afișăm un mesaj vizibil pe pagină
+          try{
+            const el = document.getElementById('next-stage');
+            if(el) el.textContent = 'Eroare: nu s-a putut încărca scriptul aplicației.';
+          }catch(e){}
+          return;
+        }
+        const url = candidates[idx];
+        const s = document.createElement('script');
+        s.src = url;
+        s.async = false;
+        s.onload = function(){ console.info('[countdown] script extern încărcat:', url); };
+        s.onerror = function(ev){ console.warn('[countdown] eroare la încărcarea scriptului:', url); s.remove(); tryLoad(idx+1); };
+        document.head.appendChild(s);
+      }
+      tryLoad(0);
+    })();
+  </script>
 </body>
 </html>
 

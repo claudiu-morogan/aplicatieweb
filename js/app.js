@@ -1,24 +1,30 @@
 /* Countdown & comutare temă */
 (function(){
-  const etape = window.__ETAPE__ || [];
-  const tbody = document.getElementById('tabel-etape');
-  const nextStageEl = document.getElementById('next-stage');
-  const yearEl = document.getElementById('year');
-  const toggleBtn = document.getElementById('toggle-theme');
-  const autoModeCb = document.getElementById('auto-mode');
-  const particlesToggle = document.getElementById('particles-toggle');
-  const title = document.getElementById('site-title');
-  const activeThemeLabel = document.getElementById('active-theme-label');
+  // Initialize after DOM is ready to ensure elements exist
+  function init(){
+    let etape = window.__ETAPE__ || [];
+    const tbody = document.getElementById('tabel-etape');
+    const nextStageEl = document.getElementById('next-stage');
+    const yearEl = document.getElementById('year');
+    const toggleBtn = document.getElementById('toggle-theme');
+    const autoModeCb = document.getElementById('auto-mode');
+    const particlesToggle = document.getElementById('particles-toggle');
+    const title = document.getElementById('site-title');
+    const activeThemeLabel = document.getElementById('active-theme-label');
 
   yearEl.textContent = new Date().getFullYear();
 
-  // Construcție rânduri
-  etape.forEach(({ etapa, estimare }, index) => {
-    const tr = document.createElement('tr');
-    tr.dataset.index = index;
-    tr.innerHTML = `<td>${etapa}</td><td>${new Date(estimare).toLocaleDateString('ro-RO')}</td><td id="timer-${index}" aria-live="off" class="mono">calculând...</td>`;
-    tbody.appendChild(tr);
-  });
+  // Construcție rânduri - funcție reutilizabilă
+  function buildRows(){
+    tbody.innerHTML = '';
+    etape.forEach(({ etapa, estimare }, index) => {
+      const tr = document.createElement('tr');
+      tr.dataset.index = index;
+      tr.innerHTML = `<td>${etapa}</td><td>${new Date(estimare).toLocaleDateString('ro-RO')}</td><td id="timer-${index}" aria-live="off" class="mono">calculând...</td>`;
+      tbody.appendChild(tr);
+    });
+  }
+  buildRows();
 
   function plural(v, s) { return v + ' ' + s + (v === 1 ? '' : ''); } // simplu
 
@@ -58,7 +64,20 @@
   }
 
   updateTimers();
-  setInterval(updateTimers, 1000);
+  let intervalId = setInterval(updateTimers, 1000);
+
+  // Dacă datele vin asincron (fetch în index.php), reconstruim rândurile când evenimentul e emis
+  window.addEventListener('seasons:loaded', (ev) => {
+    try{
+      if(ev && ev.detail){
+        if(ev.detail.autumn) window.__ETAPE__ = ev.detail.autumn;
+        if(ev.detail.christmas) window.__ETAPE_CRACIUN__ = ev.detail.christmas;
+      }
+    }catch(e){}
+    // Alege setul de etape corespunzător temei curente (autumn/christmas)
+    const currentTheme = body.classList.contains('theme-christmas') ? 'christmas' : 'autumn';
+    refreshEtapeForTheme(currentTheme);
+  });
 
   // Logică temă
   const body = document.body;
@@ -81,7 +100,30 @@
     activeThemeLabel.textContent = 'Tema ' + (isXmas ? 'Crăciun' : 'Toamnă');
     title.textContent = isXmas ? title.dataset.christmas : title.dataset.autumn;
     spawnParticles();
-  buildLights(isXmas);
+    buildLights(isXmas);
+    // Actualizează setul de etape afișat în funcție de tema activă
+    refreshEtapeForTheme(theme);
+  }
+
+  // Alege setul de etape corect în funcție de temă și reconstruiește tabelul
+  function refreshEtapeForTheme(theme){
+    const isXmas = theme === 'christmas' || body.classList.contains('theme-christmas');
+    const prevLen = etape.length || 0;
+    if(isXmas){
+      if(window.__ETAPE_CRACIUN__ && window.__ETAPE_CRACIUN__.length){
+        etape = window.__ETAPE_CRACIUN__.slice();
+      } else {
+        // fallback la autumn dacă nu există date Crăciun
+        etape = window.__ETAPE__ || [];
+      }
+    } else {
+      etape = window.__ETAPE__ || [];
+    }
+    // Reconstruim rândurile doar dacă s-au schimbat (sau întotdeauna pentru simplitate)
+    buildRows();
+    clearInterval(intervalId);
+    updateTimers();
+    intervalId = setInterval(updateTimers, 1000);
   }
 
   function loadPrefs(){
@@ -168,7 +210,14 @@
     setTimeout(()=> span.remove(), duration*1000);
   }
 
-  loadPrefs();
-  particlesToggle && particlesToggle.addEventListener('change', ()=> spawnParticles());
-  buildLights(body.classList.contains('theme-christmas'));
+    loadPrefs();
+    particlesToggle && particlesToggle.addEventListener('change', ()=> spawnParticles());
+    buildLights(body.classList.contains('theme-christmas'));
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 })();
