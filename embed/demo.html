@@ -1,0 +1,22 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Widget demo</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+body{font-family:system-ui,Segoe UI,Arial;padding:20px}
+.grid{display:flex;gap:16px;flex-wrap:wrap}
+</style>
+<h1>Embeddable Countdown Widget — Demo</h1>
+<p>Two widgets with different settings:</p>
+<div class="grid">
+  <div>
+    <div class="aweb-countdown" data-season="christmas"></div>
+    <p class="small">Christmas (next)</p>
+  </div>
+  <div>
+    <div class="aweb-countdown" data-season="autumn"></div>
+    <p class="small">Autumn (next)</p>
+  </div>
+</div>
+
+<script src="/aplicatieweb/embed/widget.js" async></script>

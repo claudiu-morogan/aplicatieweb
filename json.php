@@ -34,23 +34,32 @@ if(!$wantJson && isset($_SERVER['HTTP_ACCEPT']) && strpos($_SERVER['HTTP_ACCEPT'
 }
 
 if($wantJson){
-  // datele de sezon (același conținut folosit pentru tabelul din index.php)
+  // Preferăm să citim datele din fișiere JSON din folderul `data/`
+  $autumnFile = $dir . DIRECTORY_SEPARATOR . 'etape_toamna.json';
+  $christmasFile = $dir . DIRECTORY_SEPARATOR . 'etape_craciun.json';
+
+  $autumn = [];
+  $christmas = [];
+
+  if(is_file($autumnFile)){
+    $c = @file_get_contents($autumnFile);
+    if($c !== false){
+      $tmp = json_decode($c, true);
+      if(json_last_error() === JSON_ERROR_NONE && is_array($tmp)) $autumn = $tmp;
+    }
+  }
+
+  if(is_file($christmasFile)){
+    $c = @file_get_contents($christmasFile);
+    if($c !== false){
+      $tmp = json_decode($c, true);
+      if(json_last_error() === JSON_ERROR_NONE && is_array($tmp)) $christmas = $tmp;
+    }
+  }
+
   $seasons = [
-    'autumn' => [
-      [ 'etapa' => 'Scade temperatura sub 30°C (în general)', 'estimare' => '2025-08-15T00:00:00' ],
-      [ 'etapa' => 'Primele frunze galbene în copaci', 'estimare' => '2025-09-01T00:00:00' ],
-      [ 'etapa' => 'Vânt mai răcoros dimineața', 'estimare' => '2025-09-05T00:00:00' ],
-      [ 'etapa' => 'Simți nevoia de geacă dimineața', 'estimare' => '2025-09-10T00:00:00' ],
-      [ 'etapa' => 'Început oficial al toamnei', 'estimare' => '2025-09-22T00:00:00' ]
-    ],
-    'christmas' => [
-      [ 'etapa' => 'Primele luminițe aprinse', 'estimare' => '2025-11-25T00:00:00' ],
-      [ 'etapa' => 'Începe calendarul de Advent', 'estimare' => '2025-12-01T00:00:00' ],
-      [ 'etapa' => 'Împodobirea bradului', 'estimare' => '2025-12-10T00:00:00' ],
-      [ 'etapa' => 'Cumpărături de Ajun', 'estimare' => '2025-12-23T00:00:00' ],
-      [ 'etapa' => 'Ajunul Crăciunului', 'estimare' => '2025-12-24T00:00:00' ],
-      [ 'etapa' => 'Ziua de Crăciun', 'estimare' => '2025-12-25T00:00:00' ]
-    ]
+    'autumn' => $autumn,
+    'christmas' => $christmas
   ];
 
   header('Content-Type: application/json; charset=utf-8');

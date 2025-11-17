@@ -60,7 +60,7 @@
   </footer>
 
   <!-- Datele etapelor au fost mutate în fișiere JSON în directorul /data
-       Fișiere: data/etape.json și data/etape_craciun.json
+    Fișiere: data/etape_toamna.json și data/etape_craciun.json
        Dacă serverul nu le poate servi, aplicația încearcă în continuare să folosească
        variabilele globale `window.__ETAPE__` și `window.__ETAPE_CRACIUN__` ca fallback. -->
   <script>
