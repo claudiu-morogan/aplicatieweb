@@ -1,0 +1,38 @@
+# Configuration
+config.php
+
+# Uploads and Media
+uploads/*
+!uploads/.gitkeep
+public/media/*
+!public/media/.gitkeep
+
+# Logs
+logs/*
+!logs/.gitkeep
+
+# Database dumps
+*.sql.gz
+database/dumps/*
+!database/dumps/.gitkeep
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+tmp/*
+!tmp/.gitkeep
+cache/*
+!cache/.gitkeep
+
+# Dependencies (if using Composer in future)
+vendor/
+composer.lock

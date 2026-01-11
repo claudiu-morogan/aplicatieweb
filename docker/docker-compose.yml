@@ -1,18 +1,66 @@
 version: '3.8'
+
 services:
+  # PHP + Apache
   web:
     build:
       context: ..
       dockerfile: docker/Dockerfile
-    container_name: aplicatieweb_web
+    container_name: aweb_php
     ports:
       - "8080:80"
     volumes:
-      - ../:/var/www/html:cached
+      - ..:/var/www/html
     environment:
-      - APACHE_RUN_USER=www-data
+      - APACHE_DOCUMENT_ROOT=/var/www/html/public
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - aweb_network
+
+  # MySQL Database
+  db:
+    image: mysql:8.0
+    container_name: aweb_mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: aplicatieweb
+      MYSQL_USER: aweb_user
+      MYSQL_PASSWORD: aweb_pass
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ../database:/docker-entrypoint-initdb.d
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost/"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-prootpassword"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    networks:
+      - aweb_network
+
+  # phpMyAdmin (optional, for easy database management)
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: aweb_phpmyadmin
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: rootpassword
+      UPLOAD_LIMIT: 50M
+    depends_on:
+      - db
+    networks:
+      - aweb_network
+
+volumes:
+  mysql_data:
+    driver: local
+
+networks:
+  aweb_network:
+    driver: bridge
